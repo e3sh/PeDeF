@@ -74,3 +74,11 @@ SE
 
 SpriteAsset
 https://www.spriters-resource.com/
+
+
+#### Release 1 初版　
+提出　04/11(金) 23:46:12.89
+
+#### Release 2 調整中
+変更点　(自機移動をブロック単位に　xキーでブロックを後ろにも飛ばすことが出来るように　zキーは長押しで発動に調整）
+
