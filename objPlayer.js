@@ -32,8 +32,8 @@ function gObjectPlayer(scene, x, y){
     sprite.setCollideWorldBounds(true);
 
     //sprite.setScale(1);
-    //sprite.setBodySize(12,12);
-    sprite.setCircle(7, 2, 1);
+    sprite.setBodySize(15,15);
+    //sprite.setCircle(7, 2, 1);
 
     this.gameobject = sprite;
     sprite.anims.play('popup_p',true); 
@@ -317,9 +317,9 @@ function gObjectPlayer(scene, x, y){
       }
  
       //moveaction_tw();
-      moveaction_moveTo();
+      //moveaction_moveTo();
       //moveaction_slip();
-      //moveaction_normal();
+      moveaction_normal();
  
       if (Boolean(mvmode.anim)){
         sprite.anims.play((mvmode.push?'push_':'')+mvmode.anim, true);}
