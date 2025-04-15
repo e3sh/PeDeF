@@ -43,7 +43,7 @@ function gObjectPlayer(scene, x, y){
     seffect = scene.seffect;
 
     before_space = {flag:inputc.space, dur:inputc.duration.space};
-    before_pos = {x:0, y:0, vx:0, vy:0, dur: 0};
+    before_pos = [];// {x:0, y:0, vx:0, vy:0, dur: 0};
   
     tween = scene.tweens.add({
       targets: sprite,
@@ -91,6 +91,10 @@ function gObjectPlayer(scene, x, y){
       mvmode.dur = inputc.duration.down;
     }
 
+    if ((inputc.left)||(inputc.right)||(inputc.up)||(inputc.down)){
+      //before_pos.vx = mvmode.vx;
+      //before_pos.vy = mvmode.vy;
+    }
     //let b2 = ((Math.abs(sprite.body.velocity.x)<1)&&(Math.abs(sprite.body.velocity.y)<1));
 
     let blockoperation = false;
@@ -239,15 +243,48 @@ function gObjectPlayer(scene, x, y){
       }
 
       moveaction_moveTo =()=>{  
+        //Cornrt ajust
+        
+        let avx = 0;
+        let avy = 0;
+        
+        let w = {vx:0, vy:0};
 
-       // if (gt_ud.index == BG.FLOOR && gt_lr.index == BG.FLOOR){//} && gt.index == BG.FLOOR){
-          scene.physics.moveTo(
-            sprite,
-            sprite.x + mvmode.vx*16,//(Math.trunc((sprite.x+6)/16)+mvmode.vx)*16+8,
-            sprite.y + mvmode.vy*16,//(Math.trunc((sprite.y+6)/16)+mvmode.vy)*16+8,
-            SPEED//,
-            //maxtime
-          );
+        before_pos.push({vx :mvmode.vx, vy:mvmode.vy});
+        if (before_pos.length > 6){ //SlipFrame
+          let st = "";
+          for (let i in before_pos){
+            st += before_pos[i].vx + ",";
+          }
+          st += "|";
+          for (let i in before_pos){
+            st += before_pos[i].vy + ",";
+          }
+          //console.log(st);
+          w = before_pos.shift();
+        }
+        
+        if (w.vx != mvmode.vx && w.vy != mvmode.vy){
+
+          let cnx = w.vx + mvmode.vx;
+          let cny = w.vy + mvmode.vy;
+
+          if (Math.abs(cnx) == 1 && Math.abs(cny) == 1){
+            avx = w.vx*16;
+            avy = w.vy*16;
+            //scene.infolayer.putTileAt(Phaser.Math.Between(1,90),Math.trunc(sprite.x/16),Math.trunc(sprite.y/16));
+          }
+          //}
+          //console.log(w.vx +","+ w.vy + ",c:"+ cnx +","+cny+",a:"+avx+","+avy);
+        }
+        
+        scene.physics.moveTo(
+          sprite,
+          sprite.x + mvmode.vx*16 + avx,//(Math.trunc((sprite.x+6)/16)+mvmode.vx)*16+8,
+          sprite.y + mvmode.vy*16 + avy,//(Math.trunc((sprite.y+6)/16)+mvmode.vy)*16+8,
+          SPEED//,
+          //maxtime
+        );
         //}
       }
 
@@ -328,10 +365,10 @@ function gObjectPlayer(scene, x, y){
       //if (Math.trunc((sprite.x-7))%16 <2 ) sprite.setVelocityX(0);
       //if (Math.trunc((sprite.y-7))%16 <2 ) sprite.setVelocityY(0);
       
-      if (mvmode.dur == 0){
+      //if (mvmode.dur == 0){
         sprite.setVelocityX(0);
         sprite.setVelocityY(0);
-      }
+      //}
       
     }
   }
