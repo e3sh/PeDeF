@@ -252,7 +252,7 @@ class GameScene extends Phaser.Scene {
       for (let i=0; i<1; i++){
         const w = new gObjectEnemyTr(this, 0, 0);
         w.gameobject.deadstate = true;
-        w.BONUSreceived = true;
+        w.gameobject.BONUSreceived = true;
         w.gameobject.setVisible(false);
         this.wp.push(w);
       }
