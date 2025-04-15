@@ -243,45 +243,11 @@ function gObjectPlayer(scene, x, y){
       }
 
       moveaction_moveTo =()=>{  
-        //Cornrt ajust
-        
-        let avx = 0;
-        let avy = 0;
-        
-        let w = {vx:0, vy:0};
-
-        before_pos.push({vx :mvmode.vx, vy:mvmode.vy});
-        if (before_pos.length > 6){ //SlipFrame
-          let st = "";
-          for (let i in before_pos){
-            st += before_pos[i].vx + ",";
-          }
-          st += "|";
-          for (let i in before_pos){
-            st += before_pos[i].vy + ",";
-          }
-          //console.log(st);
-          w = before_pos.shift();
-        }
-        
-        if (w.vx != mvmode.vx && w.vy != mvmode.vy){
-
-          let cnx = w.vx + mvmode.vx;
-          let cny = w.vy + mvmode.vy;
-
-          if (Math.abs(cnx) == 1 && Math.abs(cny) == 1){
-            avx = w.vx*16;
-            avy = w.vy*16;
-            //scene.infolayer.putTileAt(Phaser.Math.Between(1,90),Math.trunc(sprite.x/16),Math.trunc(sprite.y/16));
-          }
-          //}
-          //console.log(w.vx +","+ w.vy + ",c:"+ cnx +","+cny+",a:"+avx+","+avy);
-        }
         
         scene.physics.moveTo(
           sprite,
-          sprite.x + mvmode.vx*16 + avx,//(Math.trunc((sprite.x+6)/16)+mvmode.vx)*16+8,
-          sprite.y + mvmode.vy*16 + avy,//(Math.trunc((sprite.y+6)/16)+mvmode.vy)*16+8,
+          sprite.x + mvmode.vx*16,//(Math.trunc((sprite.x+6)/16)+mvmode.vx)*16+8,
+          sprite.y + mvmode.vy*16,//(Math.trunc((sprite.y+6)/16)+mvmode.vy)*16+8,
           SPEED//,
           //maxtime
         );
